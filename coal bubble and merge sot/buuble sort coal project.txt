@@ -1,0 +1,65 @@
+TITLE add and sub pattern.asm
+include irvine32.inc
+
+.data
+messege1 byte "please enter 5 positive number"
+messege2 byte "after bubble sort"
+array WORD 5 DUP(0)
+
+.code
+main proc
+mov edx,offset messege1
+call writestring
+call crlf
+
+mov ecx,5
+mov esi,0
+L1:
+call readdec
+mov array[esi*type array],ax
+inc esi
+Loop L1
+
+
+mov ecx,5
+mov esi,0
+L2:
+PUSH ecx
+mov edi,esi
+inc edi
+mov ecx,5
+sub ecx,edi
+cmp ecx,0
+je last
+L3:
+mov ax,array[esi*type array]
+mov bx, array[edi*type array]
+cmp ax,bx
+jb next
+mov array[esi*type array],bx
+mov array[edi*type array],ax
+next:
+inc edi
+Loop L3
+last:
+inc esi
+POP ecx
+Loop L2
+mov edx,offset messege2
+call writestring
+call crlf
+mov esi,0
+mov ecx,5
+L4:
+mov ax,array[esi*Type array]
+call writedec
+call crlf
+inc esi
+Loop L4
+
+
+
+
+exit
+main endp
+end main
